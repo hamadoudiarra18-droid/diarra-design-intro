@@ -1,5 +1,6 @@
 import { Composition } from "remotion";
 import { Intro } from "./Intro";
+import { Pub } from "./Pub";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -31,6 +32,24 @@ export const RemotionRoot: React.FC = () => {
           tagline: "Donnez vie à vos idées",
           services: "Affiches & vidéos publicitaires",
         }}
+      />
+      <Composition
+        id="Pub-16x9"
+        component={Pub}
+        durationInFrames={600}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{ whatsapp: "+223 00 00 00 00" }}
+      />
+      <Composition
+        id="Pub-9x16"
+        component={Pub}
+        durationInFrames={600}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{ whatsapp: "+223 00 00 00 00" }}
       />
     </>
   );
