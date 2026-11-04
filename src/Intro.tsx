@@ -1,7 +1,8 @@
 import { TransitionSeries, linearTiming } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import { slide } from "@remotion/transitions/slide";
-import { AbsoluteFill } from "remotion";
+import { Audio } from "@remotion/media";
+import { AbsoluteFill, Sequence, staticFile } from "remotion";
 import { Background } from "./Background";
 import { ShapesScene } from "./scenes/ShapesScene";
 import { TaglineScene } from "./scenes/TaglineScene";
@@ -37,6 +38,21 @@ export const Intro: React.FC<IntroProps> = ({ title, tagline, services }) => {
           <TaglineScene tagline={tagline} services={services} />
         </TransitionSeries.Sequence>
       </TransitionSeries>
+
+      {/* Bande-son : musique de fond + effets calés sur les transitions */}
+      <Audio name="Musique" src={staticFile("audio/musique.wav")} volume={0.6} />
+      <Sequence name="Whoosh 1" from={50} layout="none">
+        <Audio src={staticFile("audio/whoosh.wav")} volume={0.7} />
+      </Sequence>
+      <Sequence name="Impact titre" from={66} layout="none">
+        <Audio src={staticFile("audio/impact.wav")} volume={0.8} />
+      </Sequence>
+      <Sequence name="Whoosh 2" from={125} layout="none">
+        <Audio src={staticFile("audio/whoosh.wav")} volume={0.7} />
+      </Sequence>
+      <Sequence name="Scintillement slogan" from={140} layout="none">
+        <Audio src={staticFile("audio/scintillement.wav")} volume={0.5} />
+      </Sequence>
     </AbsoluteFill>
   );
 };
