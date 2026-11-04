@@ -86,7 +86,7 @@ export const DessinAnime: React.FC<DessinAnimeProps> = ({ title, tagline, contac
         src={staticFile("audio/musique-dessin.wav")}
         volume={(f) => interpolate(f, [0, 10], [0.4, 0.7], { extrapolateRight: "clamp" })}
       />
-      <Sequence name="Whoosh entrée" from={0} layout="none">
+      <Sequence name="Whoosh entrée" layout="none">
         <Audio src={staticFile("audio/whoosh.wav")} volume={0.4} />
       </Sequence>
       <Sequence name="Boing atterrissage" from={14} layout="none">
