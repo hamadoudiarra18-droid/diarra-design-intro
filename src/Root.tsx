@@ -1,5 +1,6 @@
 import { Composition } from "remotion";
 import { Intro } from "./Intro";
+import { DessinAnime } from "./DessinAnime";
 import { Pub } from "./Pub";
 
 export const RemotionRoot: React.FC = () => {
@@ -52,6 +53,34 @@ export const RemotionRoot: React.FC = () => {
         id="Pub-9x16"
         component={Pub}
         durationInFrames={600}
+        fps={30}
+        width={1080}
+        height={1920}
+        defaultProps={{
+          title: "DIARRA DESIGN",
+          tagline: "Donnez vie à vos idées",
+          contact: "WhatsApp : +223 00 00 00 00",
+        }}
+      />
+      {/* Dessin animé promo de 10 s, format paysage 16:9 */}
+      <Composition
+        id="DessinAnime-16x9"
+        component={DessinAnime}
+        durationInFrames={300}
+        fps={30}
+        width={1920}
+        height={1080}
+        defaultProps={{
+          title: "DIARRA DESIGN",
+          tagline: "Donnez vie à vos idées",
+          contact: "WhatsApp : +223 00 00 00 00",
+        }}
+      />
+      {/* Dessin animé promo de 10 s, format vertical 9:16 */}
+      <Composition
+        id="DessinAnime-9x16"
+        component={DessinAnime}
+        durationInFrames={300}
         fps={30}
         width={1080}
         height={1920}
