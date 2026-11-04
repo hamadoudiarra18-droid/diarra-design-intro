@@ -3,7 +3,7 @@ import { TransitionSeries, linearTiming } from "@remotion/transitions";
 import { fade } from "@remotion/transitions/fade";
 import { slide } from "@remotion/transitions/slide";
 import { wipe } from "@remotion/transitions/wipe";
-import { AbsoluteFill, Sequence, staticFile } from "remotion";
+import { AbsoluteFill, Sequence, interpolate, staticFile } from "remotion";
 import { Background } from "./Background";
 import { CtaScene } from "./pub/CtaScene";
 import { HookScene } from "./pub/HookScene";
@@ -53,27 +53,40 @@ export const Pub: React.FC<PubProps> = ({ title, tagline, contact }) => {
       </TransitionSeries>
 
       {/* Bande-son : musique de 20 s + effets calés sur les transitions */}
-      <Audio name="Musique" src={staticFile("audio/musique-pub.wav")} volume={0.6} />
+      {/* Musique plus basse pendant la voix off (de 1,5 s à 18,5 s) */}
+      <Audio
+        name="Musique"
+        src={staticFile("audio/musique-pub.wav")}
+        volume={(f) =>
+          interpolate(f, [0, 35, 50, 550, 570], [0.6, 0.6, 0.22, 0.22, 0.6], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          })
+        }
+      />
+      <Sequence name="Voix off" from={45} layout="none">
+        <Audio src={staticFile("audio/voix-off.mp3")} volume={1} />
+      </Sequence>
       <Sequence name="Whoosh 1" from={38} layout="none">
-        <Audio src={staticFile("audio/whoosh.wav")} volume={0.6} />
+        <Audio src={staticFile("audio/whoosh.wav")} volume={0.35} />
       </Sequence>
       <Sequence name="Impact titre" from={50} layout="none">
-        <Audio src={staticFile("audio/impact.wav")} volume={0.8} />
+        <Audio src={staticFile("audio/impact.wav")} volume={0.5} />
       </Sequence>
       <Sequence name="Whoosh 2" from={113} layout="none">
-        <Audio src={staticFile("audio/whoosh.wav")} volume={0.6} />
+        <Audio src={staticFile("audio/whoosh.wav")} volume={0.35} />
       </Sequence>
       <Sequence name="Whoosh 3" from={218} layout="none">
-        <Audio src={staticFile("audio/whoosh.wav")} volume={0.6} />
+        <Audio src={staticFile("audio/whoosh.wav")} volume={0.35} />
       </Sequence>
       <Sequence name="Whoosh 4" from={338} layout="none">
-        <Audio src={staticFile("audio/whoosh.wav")} volume={0.6} />
+        <Audio src={staticFile("audio/whoosh.wav")} volume={0.35} />
       </Sequence>
       <Sequence name="Whoosh 5" from={458} layout="none">
-        <Audio src={staticFile("audio/whoosh.wav")} volume={0.6} />
+        <Audio src={staticFile("audio/whoosh.wav")} volume={0.35} />
       </Sequence>
       <Sequence name="Scintillement contact" from={495} layout="none">
-        <Audio src={staticFile("audio/scintillement.wav")} volume={0.5} />
+        <Audio src={staticFile("audio/scintillement.wav")} volume={0.3} />
       </Sequence>
     </AbsoluteFill>
   );
