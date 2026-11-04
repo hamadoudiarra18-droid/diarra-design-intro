@@ -20,27 +20,31 @@ def lowpass(x, k):  # moyenne glissante simple
 def note(f): return 440 * 2 ** ((f - 69) / 12)
 
 # --- Musique : 120 bpm, accords Am - F - C - G, basse, kick, hi-hat ---
-D = 8.0; n = int(SR*D); music = np.zeros(n); beat = 0.5
-chords = [[57,60,64],[53,57,60],[48,52,55],[55,59,62]]
-for i in range(4):
-    start = int(i*2*SR); tt = t(2.0); seg = np.zeros(len(tt))
-    for m in chords[i]:
-        f = note(m)
-        seg += np.sin(2*np.pi*f*tt) + 0.5*np.sin(2*np.pi*f*1.003*tt) + 0.3*np.sin(2*np.pi*2*f*tt)
-    seg *= env(len(tt), 0.3, 0.4) * 0.12
-    bass = np.sign(np.sin(2*np.pi*note(chords[i][0]-12)*tt)) * 0.08
-    bass = lowpass(bass, 40) * env(len(tt), 0.02, 0.2)
-    music[start:start+len(tt)] += seg + bass
-for b in range(int(D/beat)):
-    s = int(b*beat*SR)
-    if b >= 2:  # kick à partir de la 2e mesure
-        kt = t(0.25); kick = np.sin(2*np.pi*(50+90*np.exp(-kt*30))*kt) * np.exp(-kt*12) * 0.5
-        music[s:s+len(kt)] += kick[:n-s]
-    hs = s + int(beat/2*SR); ht = t(0.05)
-    if hs + len(ht) < n:
-        music[hs:hs+len(ht)] += rng.normal(0,1,len(ht)) * np.exp(-ht*80) * 0.05
-music *= env(n, 0.5, 1.2)
-save("musique.wav", music)
+def musique(D):
+    n = int(SR*D); music = np.zeros(n); beat = 0.5
+    chords = [[57,60,64],[53,57,60],[48,52,55],[55,59,62]]
+    for i in range(int(D/2)):
+        start = int(i*2*SR); tt = t(2.0); seg = np.zeros(len(tt))
+        ch = chords[i % 4]
+        for m in ch:
+            f = note(m)
+            seg += np.sin(2*np.pi*f*tt) + 0.5*np.sin(2*np.pi*f*1.003*tt) + 0.3*np.sin(2*np.pi*2*f*tt)
+        seg *= env(len(tt), 0.3, 0.4) * 0.12
+        bass = np.sign(np.sin(2*np.pi*note(ch[0]-12)*tt)) * 0.08
+        bass = lowpass(bass, 40) * env(len(tt), 0.02, 0.2)
+        music[start:start+len(tt)] += (seg + bass)[:n-start]
+    for b in range(int(D/beat)):
+        s = int(b*beat*SR)
+        if b >= 2:  # kick à partir de la 2e mesure
+            kt = t(0.25); kick = np.sin(2*np.pi*(50+90*np.exp(-kt*30))*kt) * np.exp(-kt*12) * 0.5
+            music[s:s+len(kt)] += kick[:n-s]
+        hs = s + int(beat/2*SR); ht = t(0.05)
+        if hs + len(ht) < n:
+            music[hs:hs+len(ht)] += rng.normal(0,1,len(ht)) * np.exp(-ht*80) * 0.05
+    return music * env(n, 0.5, 1.2)
+
+save("musique.wav", musique(8.0))
+save("musique-pub.wav", musique(20.0))
 
 # --- Whoosh : bruit filtré qui monte puis descend ---
 tt = t(0.6); noise = rng.normal(0,1,len(tt))

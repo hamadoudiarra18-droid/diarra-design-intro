@@ -1,3 +1,16 @@
+import { loadFont } from "@remotion/fonts";
+import { staticFile } from "remotion";
+
+// Police Montserrat stockée dans public/fonts (fonctionne sans Internet).
+const fontFamily = "Montserrat";
+for (const weight of ["500", "700", "800", "900"]) {
+  loadFont({
+    family: fontFamily,
+    url: staticFile(`fonts/montserrat-latin-${weight}-normal.woff2`),
+    weight,
+  });
+}
+
 // Couleurs et polices partagées par toutes les scènes.
 export const theme = {
   bgDark: "#060B1F",
@@ -6,7 +19,7 @@ export const theme = {
   accentLight: "#8FC2FF",
   gold: "#FFC94D",
   text: "#FFFFFF",
-  font: "'Montserrat', 'Helvetica Neue', Arial, sans-serif",
+  font: fontFamily,
 };
 
 // Taille de référence : la plus petite dimension de la vidéo.
