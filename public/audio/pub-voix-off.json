@@ -1,0 +1,185 @@
+{
+  "spokenText": "Diarra Design. Votre marque mérite d'être vue. Affiches publicitaires. Vidéos publicitaires. Donnez vie à vos idées. Contactez-nous sur WhatsApp.",
+  "voice": {
+    "id": "341b4807e5e6455fa88f34bda5d6eeea",
+    "name": "Tanguy - Balanced & Reliable",
+    "language": "fr",
+    "engineRequested": "saved default",
+    "engineReturned": "orca",
+    "speed": 1
+  },
+  "source": {
+    "file": "pub-voix-off.wav",
+    "url": "https://resource2.heygen.ai/text_to_speech/81287774e2a14307a312b5c88f0e044a/341b4807e5e6455fa88f34bda5d6eeea/id=455f29b5-285c-4183-9b4d-9abbbdd4adcd.wav",
+    "requestId": "f786575f1d7b4ec0b2caae90a36e5392",
+    "durationSeconds": 9.299591836734693,
+    "originalFile": "pub-voix-off-original.mp3",
+    "measuredDurationSeconds": 9.299592,
+    "preparation": "Original MP3 decoded to mono PCM WAV at 44100 Hz, without speed or pitch changes."
+  },
+  "timingSource": "HeyGen word timestamps, with phrase boundaries corrected against measured silence in the uploaded recording; all times are seconds.",
+  "wordTimestamps": [
+    {
+      "word": "<start>",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "word": "Diarra",
+      "start": 0.299,
+      "end": 0.6827
+    },
+    {
+      "word": "Design.",
+      "start": 0.768,
+      "end": 1.365
+    },
+    {
+      "word": "Votre",
+      "start": 1.664,
+      "end": 1.877
+    },
+    {
+      "word": "marque",
+      "start": 1.963,
+      "end": 2.133
+    },
+    {
+      "word": "mérite",
+      "start": 2.219,
+      "end": 2.432
+    },
+    {
+      "word": "d'être",
+      "start": 2.475,
+      "end": 2.688
+    },
+    {
+      "word": "vue.",
+      "start": 2.773,
+      "end": 3.093
+    },
+    {
+      "word": "Affiches",
+      "start": 3.243,
+      "end": 3.584
+    },
+    {
+      "word": "publicitaires.",
+      "start": 3.627,
+      "end": 4.587
+    },
+    {
+      "word": "Vidéos",
+      "start": 4.907,
+      "end": 5.376
+    },
+    {
+      "word": "publicitaires.",
+      "start": 5.419,
+      "end": 6.315
+    },
+    {
+      "word": "Donnez",
+      "start": 6.571,
+      "end": 6.869
+    },
+    {
+      "word": "vie",
+      "start": 6.912,
+      "end": 6.997
+    },
+    {
+      "word": "à",
+      "start": 7.083,
+      "end": 7.125
+    },
+    {
+      "word": "vos",
+      "start": 7.168,
+      "end": 7.253
+    },
+    {
+      "word": "idées.",
+      "start": 7.296,
+      "end": 7.68
+    },
+    {
+      "word": "Contactez-nous",
+      "start": 7.808,
+      "end": 8.405
+    },
+    {
+      "word": "sur",
+      "start": 8.448,
+      "end": 8.533
+    },
+    {
+      "word": "WhatsApp.",
+      "start": 8.576,
+      "end": 9.05
+    },
+    {
+      "word": "<end>",
+      "start": 9.299591836734693,
+      "end": 9.299591836734693
+    }
+  ],
+  "cues": [
+    {
+      "name": "Signature",
+      "from": 0.8,
+      "sourceStart": 0.18,
+      "sourceEnd": 1.5,
+      "text": "Diarra Design."
+    },
+    {
+      "name": "Accroche",
+      "from": 3.4,
+      "sourceStart": 1.5,
+      "sourceEnd": 3.17,
+      "text": "Votre marque mérite d'être vue."
+    },
+    {
+      "name": "Affiches",
+      "from": 7.45,
+      "sourceStart": 3.17,
+      "sourceEnd": 4.75,
+      "text": "Affiches publicitaires."
+    },
+    {
+      "name": "Vidéos",
+      "from": 11.45,
+      "sourceStart": 4.75,
+      "sourceEnd": 6.25,
+      "text": "Vidéos publicitaires."
+    },
+    {
+      "name": "Contact",
+      "from": 15.4,
+      "sourceStart": 6.25,
+      "sourceEnd": 9.299591836734693,
+      "text": "Donnez vie à vos idées. Contactez-nous sur WhatsApp."
+    }
+  ],
+  "review": {
+    "phraseCuts": "All cuts are inside detected silence; final cut corrected to 6.25 s, before speech resumes at 6.385 s.",
+    "contentReference": "Submitted script and returned word timestamps; no independent speech transcription available.",
+    "listeningReview": "Subjective listening review unavailable in this environment."
+  },
+  "mix": {
+    "voiceGain": 0.85,
+    "musicGain": 0.22,
+    "musicGainDuringSpeech": 0.088,
+    "sampleRate": 48000,
+    "durationSeconds": 20.0,
+    "peakDbfs": -1.45,
+    "sourceCorrelationPerPhrase": {
+      "Signature": 0.9593,
+      "Accroche": 0.9949,
+      "Affiches": 0.9791,
+      "Vidéos": 0.9938,
+      "Contact": 0.9918
+    }
+  }
+}

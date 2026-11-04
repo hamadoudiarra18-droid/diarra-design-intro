@@ -15,6 +15,9 @@ Dans Remotion Studio, remplacez la propriété `whatsapp` de la composition Pub
 pour changer le numéro factice `+223 00 00 00 00`.
 Montserrat est embarquée dans `public/fonts/` (licence OFL incluse) et chargée
 via `@remotion/google-fonts`, sans téléchargement pendant le rendu.
+La publicité inclut une voix off française, répartie entre les scènes, avec
+une baisse automatique de la musique pendant les phrases. Le fichier original,
+le WAV utilisé au rendu et le texte avec ses repères sont dans `public/audio/pub-voix-off*`.
 
 ## Commandes
 ```bash

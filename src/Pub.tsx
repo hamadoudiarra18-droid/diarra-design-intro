@@ -7,6 +7,7 @@ import { fade } from "@remotion/transitions/fade";
 import { slide } from "@remotion/transitions/slide";
 import {
   AbsoluteFill,
+  Freeze,
   Sequence,
   interpolate,
   spring,
@@ -21,6 +22,31 @@ import { theme, unit } from "./theme";
 export type PubProps = { readonly whatsapp: string };
 
 const clamp = { extrapolateLeft: "clamp", extrapolateRight: "clamp" } as const;
+
+// Repères de la prise originale, à vitesse naturelle (détails dans public/audio/pub-voix-off.json).
+const voiceoverCues = [
+  { name: "Signature", from: 0.8, start: 0.18, end: 1.5 },
+  { name: "Accroche", from: 3.4, start: 1.5, end: 3.17 },
+  { name: "Affiches", from: 7.45, start: 3.17, end: 4.75 },
+  { name: "Vidéos", from: 11.45, start: 4.75, end: 6.25 },
+  { name: "Contact", from: 15.4, start: 6.25, end: 9.299591836734693 },
+] as const;
+
+const IntroForPub = () => {
+  const frame = useCurrentFrame();
+
+  return (
+    // Les images suivent la séquence accélérée. Freeze coupe uniquement l’audio
+    // de cette instance ; le mixage Pub fournit musique, effets et voix off.
+    <Freeze frame={frame}>
+      <Intro
+        title="DIARRA DESIGN"
+        tagline="Donnez vie à vos idées"
+        services="Affiches & vidéos publicitaires"
+      />
+    </Freeze>
+  );
+};
 
 const Reveal = ({
   children,
@@ -434,57 +460,107 @@ const PubSoundtrack = () => {
 
   return (
     <>
-      {/* L’intro conserve ses sons ; cette piste prend le relais pendant le fondu. */}
+      {/* Mixage indépendant : les compositions Intro originales restent inchangées. */}
       <Audio
         name="Musique publicité"
         src={staticFile("audio/musique.wav")}
-        from={3 * fps}
         loop
         loopVolumeCurveBehavior="extend"
         volume={(frame) =>
           interpolate(
             frame,
-            [0, 0.5 * fps, 15.8 * fps, 17 * fps],
-            [0, 0.45, 0.45, 0],
+            [0, 0.5 * fps, 18.8 * fps, 20 * fps],
+            [0, 0.22, 0.22, 0],
             clamp,
+          ) *
+          Math.min(
+            1,
+            ...voiceoverCues.map((cue) =>
+              interpolate(
+                frame / fps,
+                [
+                  cue.from - 0.15,
+                  cue.from,
+                  cue.from + cue.end - cue.start,
+                  cue.from + cue.end - cue.start + 0.2,
+                ],
+                [1, 0.4, 0.4, 1],
+                clamp,
+              ),
+            ),
           )
         }
+      />
+      {voiceoverCues.map((cue) => (
+        <Audio
+          key={cue.name}
+          name={`Voix off · ${cue.name}`}
+          src={staticFile("audio/pub-voix-off.wav")}
+          from={Math.round(cue.from * fps)}
+          trimBefore={Math.round(cue.start * fps)}
+          durationInFrames={Math.round((cue.end - cue.start) * fps)}
+          volume={0.85}
+        />
+      ))}
+      <Audio
+        name="Intro whoosh"
+        src={staticFile("audio/whoosh.wav")}
+        from={Math.round((50 / 30 / (8 / 3.5)) * fps)}
+        volume={0.2}
+      />
+      <Audio
+        name="Intro impact"
+        src={staticFile("audio/impact.wav")}
+        from={Math.round((66 / 30 / (8 / 3.5)) * fps)}
+        volume={0.15}
+      />
+      <Audio
+        name="Intro whoosh slogan"
+        src={staticFile("audio/whoosh.wav")}
+        from={Math.round((125 / 30 / (8 / 3.5)) * fps)}
+        volume={0.2}
+      />
+      <Audio
+        name="Intro scintillement"
+        src={staticFile("audio/scintillement.wav")}
+        from={Math.round((140 / 30 / (8 / 3.5)) * fps)}
+        volume={0.15}
       />
       <Audio
         name="Transition accroche"
         src={staticFile("audio/whoosh.wav")}
         from={2.9 * fps}
-        volume={0.45}
+        volume={0.2}
       />
       <Audio
         name="Transition affiches"
         src={staticFile("audio/whoosh.wav")}
         from={6.9 * fps}
-        volume={0.45}
+        volume={0.2}
       />
       <Audio
         name="Construction affiche"
         src={staticFile("audio/impact.wav")}
         from={7.7 * fps}
-        volume={0.35}
+        volume={0.15}
       />
       <Audio
         name="Transition vidéos"
         src={staticFile("audio/whoosh.wav")}
         from={10.9 * fps}
-        volume={0.45}
+        volume={0.2}
       />
       <Audio
         name="Transition contact"
         src={staticFile("audio/whoosh.wav")}
         from={14.9 * fps}
-        volume={0.45}
+        volume={0.2}
       />
       <Audio
         name="Contact WhatsApp"
         src={staticFile("audio/scintillement.wav")}
         from={15.9 * fps}
-        volume={0.35}
+        volume={0.15}
       />
     </>
   );
@@ -533,11 +609,7 @@ export const Pub: React.FC<PubProps> = ({ whatsapp }) => {
         >
           {/* Les 8 secondes de l’intro sont réutilisées en accéléré, sans la modifier. */}
           <Sequence durationInFrames={8 * fps} playbackRate={8 / 3.5}>
-            <Intro
-              title="DIARRA DESIGN"
-              tagline="Donnez vie à vos idées"
-              services="Affiches & vidéos publicitaires"
-            />
+            <IntroForPub />
           </Sequence>
         </TransitionSeries.Sequence>
         <TransitionSeries.Transition
